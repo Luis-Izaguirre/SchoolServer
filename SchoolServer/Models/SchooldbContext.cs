@@ -25,42 +25,9 @@ public partial class SchooldbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Course>(entity =>
-        {
-            entity.Property(e => e.CourseId).HasColumnName("course_id");
-            entity.Property(e => e.CourseDescription)
-                .HasColumnType("text")
-                .HasColumnName("course_description");
-            entity.Property(e => e.CourseName)
-                .HasMaxLength(255)
-                .IsUnicode(false)
-                .HasColumnName("course_name");
-            entity.Property(e => e.InstructorName)
-                .HasMaxLength(255)
-                .IsUnicode(false)
-                .HasColumnName("instructor_name");
-        });
-
         modelBuilder.Entity<Student>(entity =>
         {
-            entity.Property(e => e.StudentId).HasColumnName("student_id");
-            entity.Property(e => e.CourseId).HasColumnName("course_id");
-            entity.Property(e => e.Major)
-                .HasMaxLength(100)
-                .IsUnicode(false)
-                .HasColumnName("major");
-            entity.Property(e => e.StudentEmail)
-                .HasMaxLength(255)
-                .IsUnicode(false)
-                .HasColumnName("student_email");
-            entity.Property(e => e.StudentName)
-                .HasMaxLength(255)
-                .IsUnicode(false)
-                .HasColumnName("student_name");
-            entity.Property(e => e.StudentYear).HasColumnName("student_year");
-
             entity.HasOne(d => d.Course).WithMany(p => p.Students)
-                .HasForeignKey(d => d.CourseId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Students_Courses");
         });
