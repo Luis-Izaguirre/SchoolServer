@@ -20,8 +20,16 @@ public partial class SchooldbContext : DbContext
     public virtual DbSet<Student> Students { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Schooldb;Integrated Security=True;");
+    {
+        if (optionsBuilder.IsConfigured)
+        {
+            return;
+        }
+        IConfigurationBuilder builder1 = new ConfigurationBuilder().AddJsonFile("appsettings.json");
+        var config = builder1.Build();
+        optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+        //optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Schooldb;Integrated Security=True;");
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

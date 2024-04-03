@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
-using SchoolServer.Models;
 
-namespace SchoolServer;
+namespace SchoolServer.Models;
 
 public partial class Student
 {
