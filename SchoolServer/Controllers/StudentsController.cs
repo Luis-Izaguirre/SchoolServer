@@ -23,6 +23,7 @@ namespace SchoolServer.Controllers
             return await context.Students.ToListAsync();
         }
 
+        [Authorize]
         // GET: api/Population returns the same thing not just 
         [HttpGet("GetPopulation")]
         public async Task<ActionResult<IEnumerable<CoursePopulation>>> GetPopulation()
