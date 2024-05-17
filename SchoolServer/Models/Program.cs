@@ -1,6 +1,9 @@
 //We already have this, very important
+
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SchoolServer.Models;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +19,8 @@ builder.Services.AddSwaggerGen();
 //ADDING DBCONTEXT SERVICE HERE
 builder.Services.AddDbContext<SchooldbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddIdentity<CourseUser, IdentityRole>()
+    .AddEntityFrameworkStores<SchooldbContext>();
 
 var app = builder.Build();
 
@@ -28,7 +33,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//Maybe add Cors???
+app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
 app.UseHttpsRedirection();
 

@@ -1,0 +1,6 @@
+studentName,studentEmail,major,studentYear,courseName,description,instructorName,id,population
+Frank Ocean,frank@example.com,Engineering,3,Engineering Principles,Core principles of engineering,Dr. Nikola Tesla,1,1
+Grace Hopper,grace@example.com,Information Technology,4,IT Fundamentals,Basics of IT systems,Prof. Alan Kay,2,1
+Hank Hill,hank@example.com,History,2,World History,Comprehensive overview of world history,Dr. Doris Kearns Goodwin,3,1
+Ivy League,ivy@example.com,Law,1,Intro to Law,Fundamentals of law,Prof. Ruth Bader Ginsburg,4,1
+Jack Sparrow,jack@example.com,Literature,3,Classic Literature,Study of classic literary works,Dr. J.R.R. Tolkien,5,1

@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using SchoolServer.Models;
+using SchoolServer.DTO;
 
 namespace SchoolServer.Controllers
 {
@@ -21,20 +23,42 @@ namespace SchoolServer.Controllers
             return await context.Students.ToListAsync();
         }
 
-        // GET: api/Students/5 -> May not be needed,
-        //[HttpGet("GetPopulation")]
-        //public async Task<ActionResult<Student>> GetStudent(int id)
-        //{
-        //    var student = await context.Students.FindAsync(id);
+        // GET: api/Population returns the same thing not just 
+        [HttpGet("GetPopulation")]
+        public async Task<ActionResult<IEnumerable<CoursePopulation>>> GetPopulation()
+        {
+            //Old way to query old synax
+            //Await is like a query, because it
+            //var x = await (from c in context.Countries
+            //               select new CountryPopulation
+            //        {
+            //            Name = c.Name,
+            //            CountryId = c.CountryId,
+            //            //Population = c.Cities.Sum(t => t.Population)
+            //        }).ToListAsync();
+            //return x;
+            // New way old syntax
+            //    var x = from c in context.Countries
+            //            select new CountryPopulation
+            //            {
+            //                Name = c.Name,
+            //                CountryId = c.CountryId,
+            //                //Population = c.Cities.Sum(t => t.Population)
+            //            };
+            //    return await x.ToListAsync();
+            //}
 
-        //    if (student == null)
-        //    {
-        //        return NotFound();
-        //    }
+            IQueryable<CoursePopulation> x = context.Courses.
+                    Select(c => new CoursePopulation
+                    {
+                        Name = c.CourseName,
+                        CourseId = c.CourseId,
+                        Population = c.Students.Sum(t => t.Population)
+                    });
 
-        //    return student;
-        //}
+            return await x.ToListAsync();
+        }
 
-        
+
     }
 }

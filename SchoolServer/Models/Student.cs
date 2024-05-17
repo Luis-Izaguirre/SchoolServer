@@ -33,6 +33,9 @@ public partial class Student
     [Column("course_id")]
     public int CourseId { get; set; }
 
+    [Column("population")]
+    public int Population { get; set; }
+
     [ForeignKey("CourseId")]
     [InverseProperty("Students")]
     public virtual Course Course { get; set; } = null!;

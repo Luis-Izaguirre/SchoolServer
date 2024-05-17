@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using SchoolServer.Data;
 
 namespace SchoolServer.Models;
 
-public partial class SchooldbContext : DbContext
+public partial class SchooldbContext : IdentityDbContext<CourseUser>
 {
     public SchooldbContext()
     {
@@ -33,11 +37,21 @@ public partial class SchooldbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.Entity<Student>(entity =>
         {
+            entity.HasKey(c => c.StudentId).HasName("PK_Students");
             entity.HasOne(d => d.Course).WithMany(p => p.Students)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Students_Courses");
+        });
+
+        modelBuilder.Entity<Course>(entity =>
+        {
+            entity.HasKey(e => e.CourseId).HasName("PK_Country");
+            entity.Property(e => e.CourseDescription).IsFixedLength();
+            entity.Property(e => e.InstructorName).IsFixedLength();
         });
 
         OnModelCreatingPartial(modelBuilder);
