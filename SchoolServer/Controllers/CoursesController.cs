@@ -36,6 +36,14 @@ namespace SchoolServer.Controllers
             return course;
         }
 
+
+
+        [HttpGet("CoursesStudents/{id}")]
+        public async Task<ActionResult<IEnumerable<Student>>> GetStudentsByCourse(int id)
+        {
+            return await context.Students.Where(c => c.CourseId != null && c.CourseId == id).ToListAsync();
+        }
+
         // PUT: api/Courses/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

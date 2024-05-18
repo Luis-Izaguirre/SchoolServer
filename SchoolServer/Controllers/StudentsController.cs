@@ -24,30 +24,26 @@ namespace SchoolServer.Controllers
         }
 
         [Authorize]
-        // GET: api/Population returns the same thing not just 
         [HttpGet("GetPopulation")]
         public async Task<ActionResult<IEnumerable<CoursePopulation>>> GetPopulation()
         {
-            //Old way to query old synax
-            //Await is like a query, because it
-            //var x = await (from c in context.Countries
-            //               select new CountryPopulation
-            //        {
-            //            Name = c.Name,
-            //            CountryId = c.CountryId,
-            //            //Population = c.Cities.Sum(t => t.Population)
-            //        }).ToListAsync();
-            //return x;
-            // New way old syntax
-            //    var x = from c in context.Countries
-            //            select new CountryPopulation
-            //            {
-            //                Name = c.Name,
-            //                CountryId = c.CountryId,
-            //                //Population = c.Cities.Sum(t => t.Population)
-            //            };
-            //    return await x.ToListAsync();
-            //}
+
+            IQueryable<CoursePopulation> x = context.Courses.
+                    Select(c => new CoursePopulation
+                    {
+                        Name = c.CourseName,
+                        CourseId = c.CourseId,
+                        Population = c.Students.Sum(t => t.Population)
+                    });
+
+            return await x.ToListAsync();
+        }
+
+
+
+        [HttpGet("GetPopulation2")]
+        public async Task<ActionResult<IEnumerable<CoursePopulation>>> GetPopulation2()
+        {
 
             IQueryable<CoursePopulation> x = context.Courses.
                     Select(c => new CoursePopulation
