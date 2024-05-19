@@ -3,7 +3,7 @@
     public class MyCSV
     {
         public string studentName { get; set; } = null!;
-        public required string studentEmail { get; set; }  = null!;
+        public string studentEmail { get; set; }  = null!;
         public string major { get; set; } = null!;
         public int studentYear { get; set; }
         public string courseName { get; set; } = null!;

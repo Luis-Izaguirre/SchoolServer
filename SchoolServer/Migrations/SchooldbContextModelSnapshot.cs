@@ -275,6 +275,10 @@ namespace SchoolServer.Migrations
                         .HasColumnType("varchar(100)")
                         .HasColumnName("major");
 
+                    b.Property<int>("Population")
+                        .HasColumnType("int")
+                        .HasColumnName("population");
+
                     b.Property<string>("StudentEmail")
                         .IsRequired()
                         .HasMaxLength(255)

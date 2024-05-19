@@ -12,8 +12,8 @@ using SchoolServer.Models;
 namespace SchoolServer.Migrations
 {
     [DbContext(typeof(SchooldbContext))]
-    [Migration("20240517103258_StudentsPopulation")]
-    partial class StudentsPopulation
+    [Migration("20240519000229_identity")]
+    partial class identity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -277,6 +277,10 @@ namespace SchoolServer.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(100)")
                         .HasColumnName("major");
+
+                    b.Property<int>("Population")
+                        .HasColumnType("int")
+                        .HasColumnName("population");
 
                     b.Property<string>("StudentEmail")
                         .IsRequired()

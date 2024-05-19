@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,7 +14,7 @@ namespace SchoolServer.Controllers
     [ApiController]
     public class CoursesController(SchooldbContext context) : ControllerBase
     {
-   
+
         // GET: api/Courses
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
@@ -37,7 +37,7 @@ namespace SchoolServer.Controllers
         }
 
 
-
+        [Authorize]
         [HttpGet("CoursesStudents/{id}")]
         public async Task<ActionResult<IEnumerable<Student>>> GetStudentsByCourse(int id)
         {

@@ -3,7 +3,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SchoolServer;
 using SchoolServer.Models;
 
 
@@ -49,13 +51,36 @@ builder.Services.AddSwaggerGen(c => {
 });
 
 
-
-/*MADE CHANGES TOO => var app = builder.Build(); 04/02/24 */
-//ADDING DBCONTEXT SERVICE HERE
 builder.Services.AddDbContext<SchooldbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddIdentity<CourseUser, IdentityRole>()
     .AddEntityFrameworkStores<SchooldbContext>();
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}
+).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new()
+    {
+        RequireExpirationTime = true,
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+
+        ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+        ValidAudience = builder.Configuration["JwtSettings:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
+            builder.Configuration["JwtSettings:SecurityKey"] ?? throw new InvalidOperationException()))
+    };
+});
+
+builder.Services.AddScoped<JwtHandler>();
+
+
 
 var app = builder.Build();
 
@@ -71,6 +96,10 @@ if (app.Environment.IsDevelopment())
 app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+
+app.UseRouting();
 
 app.UseAuthorization();
 

@@ -79,6 +79,7 @@ namespace SchoolServer.Controllers
                     Student student = new()
                     {
                         StudentName = record.studentName,
+                        StudentEmail = record.studentEmail,
                         Major = record.major,
                         StudentYear = record.studentYear,
                         Population = (int)record.population.Value,
