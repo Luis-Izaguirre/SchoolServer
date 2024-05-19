@@ -41,7 +41,7 @@ namespace SchoolServer.Controllers
         [HttpGet("CoursesStudents/{id}")]
         public async Task<ActionResult<IEnumerable<Student>>> GetStudentsByCourse(int id)
         {
-            return await context.Students.Where(c => c.CourseId != null && c.CourseId == id).ToListAsync();
+            return await context.Students.Where(c =>  c.CourseId == id).ToListAsync();
         }
 
         // PUT: api/Courses/5

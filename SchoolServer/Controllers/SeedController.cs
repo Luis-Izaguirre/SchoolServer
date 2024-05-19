@@ -71,7 +71,7 @@ namespace SchoolServer.Controllers
                         return NotFound(record);
                     }
                     //Deleted => string.IsNullOrEmpty(record.studentEmail)
-                    if (!record.population.HasValue )
+                    if (!record.population.HasValue || string.IsNullOrEmpty(record.studentEmail))
                     {
                         Console.WriteLine($"Skipping {record.studentName}");
                         continue;

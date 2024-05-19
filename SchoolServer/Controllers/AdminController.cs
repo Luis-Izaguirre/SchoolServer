@@ -13,22 +13,22 @@ namespace SchoolServer.Controllers
     public class AdminController(UserManager<CourseUser> userManager,
         JwtHandler jwtHandler) : ControllerBase
     {
-        [HttpPost]
-        public async Task<IActionResult> Loggin(LogginRequest logginRequest)
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login(DTO.LoginRequest loginRequest)
         {
-            CourseUser? user = await userManager.FindByNameAsync(logginRequest.UserName);
+            CourseUser? user = await userManager.FindByNameAsync(loginRequest.UserName);
             if (user == null)
             {
                 return Unauthorized("Bad username :(");
             }
-            bool success = await userManager.CheckPasswordAsync(user, logginRequest.Password);
+            bool success = await userManager.CheckPasswordAsync(user, loginRequest.Password);
             if (!success)
             {
                 return Unauthorized("Wrong password :/");
             }
             JwtSecurityToken token = await jwtHandler.GetTokenAsync(user);
             string jwtString = new JwtSecurityTokenHandler().WriteToken(token);
-            return Ok(new LogginResult
+            return Ok(new LoginResult
             {
                 Success = true,
                 Message = "Sweettt!",

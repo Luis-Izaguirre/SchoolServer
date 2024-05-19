@@ -1,6 +1,6 @@
 ﻿namespace SchoolServer.DTO
 {
-    public class LogginResult
+    public class LoginResult
     {
         public bool Success { get; set; }
         public string? Message { get; set; }
