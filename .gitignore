@@ -361,7 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/SchoolServer/Controllers/SeedController.cs
 /SchoolServer/appsettings.json
 /SchoolServer/appsettings.Development.json
 /SchoolServer/appsettings.Production.json
